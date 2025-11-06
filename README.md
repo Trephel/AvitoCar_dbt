@@ -22,18 +22,29 @@ Le projet suit une architecture ELT moderne basée sur les couches suivantes :
 ┌──────────────┐
 │ Source │ (raw data - Avito)
 └──────┬───────┘
+
+
+
 ▼
+
 ┌──────────────┐
 │ Staging │ (clean / normalize data)
 └──────┬───────┘
+
+
+
 ▼
 ┌──────────────┐
 │ Dimensions │ (Brand, Model, City, Fuel, etc.)
 └──────┬───────┘
+
+
+
 ▼
 ┌──────────────┐
 │ Facts │ (Listings & Options)
 └──────────────┘
+
 
 ## ✅ Fonctions Clés du Projet
 
