@@ -19,31 +19,23 @@ Mettre en place un entrepôt de données moderne avec **dbt** sur **PostgreSQL**
 
 Le projet suit une architecture ELT moderne basée sur les couches suivantes :
 
-┌──────────────┐
-│ Source │ (raw data - Avito)
-└──────┬───────┘
+🟣 RAW DATA (Avito Scraping)
+          ↓
+🔵 Staging (dbt)  
+   ▫️ Cleaning  
+   ▫️ Normalization  
+   ▫️ Typing  
+          ↓
+🟢 Dimensions  
+   ▫️ Brand  
+   ▫️ Model  
+   ▫️ City  
+   ▫️ Fuel  
+          ↓
+🟠 Facts  
+   ▫️ Listings  
+   ▫️ Listing Options  
 
-
-
-▼
-
-┌──────────────┐
-│ Staging │ (clean / normalize data)
-└──────┬───────┘
-
-
-
-▼
-┌──────────────┐
-│ Dimensions │ (Brand, Model, City, Fuel, etc.)
-└──────┬───────┘
-
-
-
-▼
-┌──────────────┐
-│ Facts │ (Listings & Options)
-└──────────────┘
 
 
 ## ✅ Fonctions Clés du Projet
