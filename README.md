@@ -1,5 +1,18 @@
 # 🚗 AvitoCar_dbt
 
+📂 Dataset
+
+Ce projet utilise des données provenant d’Avito (annonces automobiles au Maroc), publiées sur Kaggle.
+
+🔗 Source des données :
+https://www.kaggle.com/datasets/soufianebch/maroc-avito-car-dataset
+
+Les données sont utilisées uniquement à des fins d’analyse et d’apprentissage.
+
+Merci au contributeur original du dataset.
+
+Si vous utilisez ce projet ou dérivé, merci de créditer la source.
+
 **Objectif du Projet :**  
 Mettre en place un entrepôt de données moderne avec **dbt** sur **PostgreSQL** afin de transformer des données de ventes automobiles (Avito.ma) et générer des insights business visualisés dans **Power BI**.
 
