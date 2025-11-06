@@ -1,0 +1,58 @@
+version: 2
+
+models:
+
+  - name: stg_finalavito
+    description: "Staging table: normalisation des champs depuis la source brute."
+    tests:
+      - not_null:
+          column_name: listing_id
+      - unique:
+          column_name: listing_id
+
+  - name: dim_brand
+    description: "Dimension Brand"
+    columns:
+      - name: brand_key
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_model
+    description: "Dimension Model"
+    columns:
+      - name: model_key
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_city
+    description: "Dimension City"
+    columns:
+      - name: city_key
+        tests:
+          - not_null
+          - unique
+
+  - name: fct_avito_listings
+    description: "Fact table contenant les annonces et mesures principales"
+    tests:
+      - unique:
+          column_name: listing_id
+      - not_null:
+          column_name: listing_id
+      - relationships:
+          arguments:
+            from: listing_id
+            to: ref('stg_finalavito').listing_id
+
+  - name: fct_listing_options
+    description: "Table pont entre listings et options"
+    columns:
+      - name: listing_option_key
+        tests:
+          - not_null
+          - unique
+      - name: listing_id
+        tests:
+          - not_null
