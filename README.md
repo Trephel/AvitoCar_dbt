@@ -1,71 +1,70 @@
-# 🚗 AvitoCar_dbt
+🚗 AvitoCar_dbt
 
-📂 Dataset
+Ce projet vise à construire un entrepôt de données moderne pour les annonces automobiles Avito (Maroc) et générer des insights business exploitables via Power BI.
 
-Ce projet utilise des données provenant d’Avito (annonces automobiles au Maroc), publiées sur Kaggle.
+Les données proviennent du dataset Kaggle suivant :
+🔗 Avito Car Dataset – Kaggle
 
-🔗 Source des données :
-https://www.kaggle.com/datasets/soufianebch/maroc-avito-car-dataset
+Les données sont utilisées uniquement à des fins d’analyse et d’apprentissage. Merci au contributeur original pour le partage.
 
-Les données sont utilisées uniquement à des fins d’analyse et d’apprentissage.
+🎯 Objectif du Projet
 
-Merci au contributeur original du dataset.
+Mettre en place une architecture ELT moderne avec :
 
-Si vous utilisez ce projet ou dérivé, merci de créditer la source.
+Extraction & Load : ingestion automatisée du CSV via Airbyte vers PostgreSQL
 
-**Objectif du Projet :**  
-Mettre en place un entrepôt de données moderne avec **dbt** sur **PostgreSQL** afin de transformer des données de ventes automobiles (Avito.ma) et générer des insights business visualisés dans **Power BI**.
+Transformation : modélisation et nettoyage via dbt, avec tests de qualité et documentation automatique
 
----
+Visualisation : création de dashboards interactifs dans Power BI pour explorer le marché automobile
 
-## 🔧 Stack Technique
+L’objectif est de transformer un dataset brut en informations business concrètes, prêtes à la prise de décision.
 
-| Composant | Rôle |
-|-----------|-------|
-| **PostgreSQL** | Data Warehouse |
-| **dbt Core** | Modélisation & Transformation (ELT) |
-| **Power BI** | Visualisation & Reporting |
+🔧 Stack Technique
+Composant	Rôle
+PostgreSQL	Data Warehouse centralisé
+Airbyte	Ingestion et automatisation EL
+dbt Core	Modélisation & transformation (Silver/Gold layers)
+Power BI	Visualisation et reporting interactif
+🏗 Architecture dbt (Star Schema / Medaillon Layer)
 
----
+Le projet suit une approche couches Medaillon :
 
-## 🧱 Architecture dbt (Modèles)
+Raw (Bronze) : données sources brutes
 
-Le projet suit une architecture ELT moderne basée sur les couches suivantes :
+Staging (Silver) : nettoyage, typage, normalisation
 
-🟣 RAW DATA (Avito Scraping)
-          ↓
-🔵 Staging (dbt)  
-   ▫️ Cleaning  
-   ▫️ Normalization  
-   ▫️ Typing  
-          ↓
-🟢 Dimensions  
-   ▫️ Brand  
-   ▫️ Model  
-   ▫️ City  
-   ▫️ Fuel  
-          ↓
-🟠 Facts  
-   ▫️ Listings  
-   ▫️ Listing Options  
+Intermediate / Dimensions : création de tables dimensionnelles (Brand, Model, City, Fuel)
 
+Marts / Facts (Gold) : tables métiers prêtes pour les KPIs et dashboards Power BI
 
+🟢 Cette architecture permet un workflow clair, réutilisable et testable, en conformité avec les normes d’entreprise.
 
-## ✅ Fonctions Clés du Projet
+✅ Fonctionnalités Clés
 
-- Nettoyage & normalisation des données sources
-- Création d’un modèle dimensionnel (Star Schema)
-- Mise en place de tests dbt (qualité & cohérence)
-- Documentation automatique des modèles
-- Export des données pour dashboards Power BI
+Transformation et normalisation des données brutes
 
----
+Création d’un modèle dimensionnel (Star Schema)
 
-## 📊 Dashboard Power BI
+Tests de qualité intégrés dans dbt (not_null, unique, accepted_values)
 
-Des KPI clés ont été construits pour analyser le marché automobile :
+Documentation automatique des modèles et colonnes
 
-- Prix moyens par marque / modèle / ville
-- Options les plus recherchées
-- Répartition carburants / boîtes de vitesses
-- Analyse disponibilité & tendances du marché
+Export pour dashboards interactifs Power BI
+
+📊 Exemples de KPIs construits
+
+Prix moyens par marque, modèle, ville et année
+
+Options les plus recherchées par les acheteurs
+
+Répartition carburant / boîte de vitesses
+
+Disponibilité et tendances du marché
+
+🚀 À venir / Roadmap
+
+Optimisation du pipeline dbt pour intégrer des mises à jour incrémentales
+
+Intégration de CI/CD avec GitHub Actions pour automatiser les tests et déploiements
+
+Dashboards Power BI avancés avec filtres et visualisations interactives

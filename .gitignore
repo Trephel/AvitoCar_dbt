@@ -1,5 +1,39 @@
+# -------------------------------
+# Fichiers générés par dbt
+# -------------------------------
 
+# Répertoires dbt compilés et logs
+dbt_modules/
 target/
-dbt_packages/
 logs/
-dbt_internal_packages/
+
+# -------------------------------
+# Fichiers sensibles / config
+# -------------------------------
+
+# Connexions DB, profils locaux
+profiles.yml
+
+# Secrets éventuels
+.env
+
+# -------------------------------
+# Fichiers système / OS
+# -------------------------------
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# -------------------------------
+# Python virtual environment
+# -------------------------------
+venv/
+.env/
+
+# -------------------------------
+# IDE / éditeurs
+# -------------------------------
+.idea/
+.vscode/
+*.iml
