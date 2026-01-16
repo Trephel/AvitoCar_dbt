@@ -3,9 +3,10 @@
 Ce projet vise à construire un entrepôt de données moderne pour les annonces automobiles Avito (Maroc) et générer des insights business exploitables via Power BI.
 
 Les données proviennent du dataset Kaggle suivant :
-🔗 Avito Car Dataset – Kaggle
+Ce projet utilise des données provenant d’Avito Maroc (annonces automobiles) publiées sur Kaggle.
+🔗 Source : [Avito Car Dataset](https://www.kaggle.com/datasets/soufianebch/maroc-avito-car-dataset)
 
-Les données sont utilisées uniquement à des fins d’analyse et d’apprentissage. Merci au contributeur original pour le partage.
+⚠️ Les données sont utilisées uniquement à des fins d’apprentissage et d’analyse. Merci au contributeur original.
 
 🎯 Objectif du Projet
 
@@ -20,12 +21,14 @@ Visualisation : création de dashboards interactifs dans Power BI pour explorer 
 L’objectif est de transformer un dataset brut en informations business concrètes, prêtes à la prise de décision.
 
 🔧 Stack Technique
-Composant	Rôle
-PostgreSQL	Data Warehouse centralisé
-Airbyte	Ingestion et automatisation EL
-dbt Core	Modélisation & transformation (Silver/Gold layers)
-Power BI	Visualisation et reporting interactif
-🏗 Architecture dbt (Star Schema / Medaillon Layer)
+
+| Composant      | Rôle                                                              |
+| -------------- | ----------------------------------------------------------------- |
+| **Airbyte**    | Ingestion automatisée CSV → Postgres                              |
+| **PostgreSQL** | Data Warehouse centralisé                                         |
+| **dbt Core**   | Transformation & modélisation (ELT, Star Schema, Medaillon Layer) |
+| **Power BI**   | Dashboards interactifs pour KPIs                                  |
+
 
 Le projet suit une approche couches Medaillon :
 
