@@ -2,7 +2,7 @@
 
 with boxes as (
     select distinct gearbox
-    from {{ ref('stg_finalavito') }}
+    from {{ ref('int_avito_enriched') }}
     where gearbox is not null
 )
 

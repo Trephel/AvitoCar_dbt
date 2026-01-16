@@ -2,57 +2,172 @@ version: 2
 
 models:
 
-  - name: stg_finalavito
-    description: "Staging table: normalisation des champs depuis la source brute."
-    tests:
-      - not_null:
-          column_name: listing_id
-      - unique:
-          column_name: listing_id
+  # =========================
+  # DIMENSIONS
+  # =========================
 
   - name: dim_brand
-    description: "Dimension Brand"
+    description: "Dimension des marques de véhicules"
     columns:
       - name: brand_key
+        description: "Clé technique de la marque"
         tests:
           - not_null
           - unique
+
+      - name: brand
+        description: "Nom de la marque"
+        tests:
+          - not_null
 
   - name: dim_model
-    description: "Dimension Model"
+    description: "Dimension des modèles de véhicules"
     columns:
       - name: model_key
+        description: "Clé technique du modèle"
         tests:
           - not_null
           - unique
+
+      - name: brand_key
+        description: "Clé étrangère vers dim_brand"
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_brand')
+                field: brand_key
+
+      - name: model
+        description: "Nom du modèle"
+        tests:
+          - not_null
 
   - name: dim_city
-    description: "Dimension City"
+    description: "Dimension géographique (ville / secteur)"
     columns:
       - name: city_key
+        description: "Clé technique de la ville"
         tests:
           - not_null
           - unique
+
+      - name: city
+        description: "Nom de la ville"
+        tests:
+          - not_null
+
+      - name: neighborhood
+        description: "Secteur ou quartier"
+  
+  - name: dim_fuel
+    description: "Dimension type de carburant"
+    columns:
+      - name: fuel_key
+        description: "Clé technique du carburant"
+        tests:
+          - not_null
+          - unique
+
+      - name: fuel_type
+        description: "Type de carburant"
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Diesel', 'Essence', 'Hybride', 'Électrique']
+
+  - name: dim_gearbox
+    description: "Dimension type de boîte de vitesses"
+    columns:
+      - name: gearbox_key
+        description: "Clé technique de la boîte de vitesses"
+        tests:
+          - not_null
+          - unique
+
+      - name: gearbox
+        description: "Type de boîte"
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Manuelle', 'Automatique']
+
+  # =========================
+  # FACT TABLE
+  # =========================
 
   - name: fct_avito_listings
-    description: "Fact table contenant les annonces et mesures principales"
+    description: >
+      Table de faits contenant les annonces Avito.
+      Sert de table centrale pour les analyses Power BI
+      (prix, kilométrage, tendances du marché).
+
     tests:
-      - unique:
-          column_name: listing_id
       - not_null:
           column_name: listing_id
-      - relationships:
-          arguments:
-            from: listing_id
-            to: ref('stg_finalavito').listing_id
+      - unique:
+          column_name: listing_id
 
-  - name: fct_listing_options
-    description: "Table pont entre listings et options"
     columns:
-      - name: listing_option_key
-        tests:
-          - not_null
-          - unique
       - name: listing_id
+        description: "Identifiant unique de l’annonce"
+
+      - name: brand_key
+        description: "Clé étrangère vers dim_brand"
         tests:
-          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_brand')
+                field: brand_key
+
+      - name: model_key
+        description: "Clé étrangère vers dim_model"
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_model')
+                field: model_key
+
+      - name: city_key
+        description: "Clé étrangère vers dim_city"
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_city')
+                field: city_key
+
+      - name: fuel_key
+        description: "Clé étrangère vers dim_fuel"
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_fuel')
+                field: fuel_key
+
+      - name: gearbox_key
+        description: "Clé étrangère vers dim_gearbox"
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_gearbox')
+                field: gearbox_key
+
+      - name: price
+        description: "Prix du véhicule"
+
+      - name: mileage
+        description: "Kilométrage"
+
+      - name: year_model
+        description: "Année du modèle"
+
+      - name: doors
+        description: "Nombre de portes"
+
+      - name: horsepower
+        description: "Puissance fiscale"
+
+      - name: scraped_at
+        description: "Date d’ingestion de l’annonce"

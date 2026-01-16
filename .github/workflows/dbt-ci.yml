@@ -1,0 +1,54 @@
+name: dbt CI Pipeline
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  dbt-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dbt
+        run: |
+          pip install dbt-postgres
+
+      - name: Create profiles.yml
+        run: |
+          mkdir -p ~/.dbt
+          echo "
+          avitoCar_dbt:
+            target: ci
+            outputs:
+              ci:
+                type: postgres
+                host: ${{ secrets.DB_HOST }}
+                user: ${{ secrets.DB_USER }}
+                password: ${{ secrets.DB_PASSWORD }}
+                port: 5432
+                dbname: ${{ secrets.DB_NAME }}
+                schema: silver
+          " > ~/.dbt/profiles.yml
+
+      - name: dbt debug
+        run: dbt debug
+
+      - name: dbt deps
+        run: dbt deps
+
+      - name: dbt run (staging + intermediate)
+        run: dbt run --select staging intermediate
+
+      - name: dbt test
+        run: dbt test

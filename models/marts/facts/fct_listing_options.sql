@@ -13,7 +13,7 @@ with listings as (
         has_bluetooth,
         has_leather_seats,
         has_gps
-    from {{ ref('stg_finalavito') }}
+    from {{ ref('int_avito_enriched') }}
 ),
 
 unpivot as (

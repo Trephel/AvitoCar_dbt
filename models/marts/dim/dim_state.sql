@@ -2,7 +2,7 @@
 
 with states as (
     select distinct state
-    from {{ ref('stg_finalavito') }}
+    from {{ ref('int_avito_enriched') }}
     where state is not null
 )
 

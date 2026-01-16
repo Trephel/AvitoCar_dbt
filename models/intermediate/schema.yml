@@ -1,0 +1,77 @@
+version: 2
+
+models:
+  - name: int_avito_enriched
+    description: >
+      Modèle intermédiaire enrichi à partir des annonces Avito.
+      Cette table sert de point de jonction entre les données nettoyées (staging)
+      et les tables métiers (facts & dimensions).
+
+    tests:
+      - not_null:
+          column_name: listing_id
+      - unique:
+          column_name: listing_id
+
+    columns:
+      - name: listing_id
+        description: "Identifiant unique de l’annonce"
+
+      - name: brand
+        description: "Marque du véhicule"
+        tests:
+          - not_null
+
+      - name: model
+        description: "Modèle du véhicule"
+        tests:
+          - not_null
+
+      - name: city
+        description: "Ville de publication de l’annonce"
+
+      - name: neighborhood
+        description: "Quartier ou secteur de l’annonce"
+
+      - name: price
+        description: "Prix affiché du véhicule"
+        tests:
+          - not_null
+
+      - name: mileage
+        description: "Kilométrage du véhicule"
+
+      - name: year_model
+        description: "Année du modèle du véhicule"
+
+      - name: fuel_type
+        description: "Type de carburant"
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Diesel', 'Essence', 'Hybride', 'Électrique']
+
+      - name: gearbox
+        description: "Type de boîte de vitesses"
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Manuelle', 'Automatique']
+
+      - name: is_first_owner
+        description: "Indique si le véhicule est de première main"
+
+      - name: has_abs
+        description: "Présence du système ABS"
+
+      - name: has_esp
+        description: "Présence du système ESP"
+
+      - name: has_air_conditioning
+        description: "Présence de la climatisation"
+
+      - name: scraped_at
+        description: "Date et heure de récupération de l’annonce"
+
+      - name: meta
+        description: "Métadonnées techniques issues de l’ingestion (Airbyte)"

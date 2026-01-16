@@ -2,7 +2,7 @@
 
 with fuels as (
     select distinct fuel_type
-    from {{ ref('stg_finalavito') }}
+    from {{ ref('int_avito_enriched') }}
     where fuel_type is not null
 )
 

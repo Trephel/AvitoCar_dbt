@@ -1,0 +1,30 @@
+version: 2
+
+        
+models:
+  - name: stg_avito_listings
+    description: "Données nettoyées et normalisées des annonces Avito (Silver layer)"
+
+    tests:
+      - not_null:
+          column_name: listing_id
+      - unique:
+          column_name: listing_id
+
+    columns:
+      - name: listing_id
+        description: "Identifiant unique de l’annonce"
+
+      - name: fuel_type
+        description: "Type de carburant du véhicule"
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Diesel', 'Essence', 'Hybride', 'Électrique']
+
+      - name: gearbox
+        description: "Type de boîte de vitesses"
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Manuelle', 'Automatique']

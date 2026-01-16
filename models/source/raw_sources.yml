@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: raw
+    description: "Données brutes issues de l’ingestion Airbyte (Bronze layer)"
+    schema: public
+    tables:
+      - name: FinalavitocardatasetALL
+        description: "Annonces Avito brutes (CSV Kaggle ingéré via Airbyte)"

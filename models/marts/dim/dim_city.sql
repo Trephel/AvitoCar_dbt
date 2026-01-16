@@ -2,7 +2,7 @@
 
 with cities as (
     select distinct city, neighborhood
-    from {{ ref('stg_finalavito') }}
+    from {{ ref('int_avito_enriched') }}
 )
 
 select
